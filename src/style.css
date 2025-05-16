@@ -4,3 +4,23 @@ body {
   margin: 0;
   padding: 0;
 }
+
+
+/* src/assets/styles.css 或组件内的 <style> 标签 */
+.mockup-code {
+  background-color: var(--color-fill-1);
+  color: #fff; /* 文本颜色，确保与背景对比明显 */
+  padding: 1rem;
+  overflow-x: auto; /* 横向滚动，防止代码溢出 */
+}
+
+/* 确保 Prism.js 的行号样式与背景匹配 */
+.line-numbers .line-numbers-rows {
+  background-color: var(--color-fill-3); /* 行号背景色 */
+  color: #aaa; /* 行号文本颜色 */
+}
+
+/* 调整代码字体和间距 */
+pre code {
+  font-family: 'Fira Code', monospace; /* 推荐使用等宽字体 */
+}

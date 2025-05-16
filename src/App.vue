@@ -7,9 +7,8 @@ const route = useRoute()
 
 // key 与 path 的映射
 const menuKeyMap = {
-  '1': '/',
-  '2': '/sing-box',
-  '3': '/xray'
+  '1': '/sing-box',
+  '2': '/xray'
 }
 const pathKeyMap = Object.fromEntries(Object.entries(menuKeyMap).map(([k, v]) => [v, k]))
 
@@ -41,9 +40,8 @@ function onMenuClick(key) {
         :selected-keys="selectedKeys"
         @menu-item-click="onMenuClick"
       >
-        <a-menu-item key="1">首页</a-menu-item>
-        <a-menu-item key="2">SingBox</a-menu-item>
-        <a-menu-item key="3">Xray</a-menu-item>
+        <a-menu-item key="1">SingBox v1.11.0</a-menu-item>
+        <a-menu-item key="2">Xray</a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout-content class="p-4">
