@@ -1,11 +1,11 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
-import ArcoVue from '@arco-design/web-vue';
-import '@arco-design/web-vue/dist/arco.css';
-import ArcoVueIcon from '@arco-design/web-vue/es/icon';
-
 import router from './router'
+import ArcoVue from '@arco-design/web-vue';
+import ArcoVueIcon from '@arco-design/web-vue/es/icon';
+import '@arco-design/web-vue/dist/arco.css';
+import './style.css'
+
 // 引入 Prism.js 核心
 import 'prismjs';
 // 引入主题样式（例如 prism-coy 或 prism-dark）

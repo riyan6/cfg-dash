@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // 示例页面组件（你可以根据需要新建这些文件）
-import SingBox from '../views/sing-box/index.vue'
+import SingBox from '../views/cfg/index.vue'
 
 const routes = [
   {

@@ -1,22 +1,22 @@
 <template>
     <a-form :model="model" layout="vertical">
-        <a-form-item label="VLESS 端口" required>
+        <a-form-item label="端口" required>
             <a-input v-model="model.port" placeholder="请输入端口">
                 <template #suffix>
                     <a-button size="mini" @click="model.port = randomPort()">随机端口</a-button>
                 </template>
             </a-input>
         </a-form-item>
-        <a-form-item label="VLESS 节点备注">
+        <a-form-item label="备注">
             <a-input v-model="model.remark" placeholder="用于订阅链接" />
         </a-form-item>
-        <a-form-item label="服务器名称 (SNI)" required>
+        <a-form-item label="sni" required>
             <a-input v-model="model.sni" placeholder="如：www.itunes.com,itunes.com" />
         </a-form-item>
-        <a-form-item label="目标地址 (dest)" required>
+        <a-form-item label="dest" required>
             <a-input v-model="model.dest" placeholder="如：itunes.com:443" />
         </a-form-item>
-        <a-form-item label="Reality 指纹 (fp)">
+        <a-form-item label="fp">
             <a-select v-model="model.fp" placeholder="请选择指纹">
                 <a-option value="chrome">Chrome (默认)</a-option>
                 <a-option value="firefox">Firefox</a-option>
@@ -27,7 +27,7 @@
                 <a-option value="randomized">Randomized</a-option>
             </a-select>
         </a-form-item>
-        <a-form-item label="public key" required>
+        <a-form-item label="密钥" required>
             <a-space direction="vertical" fill style="width: 100%">
                 <a-input v-model="model.public_key" readonly placeholder="自动生成">
                     <template #prepend>
@@ -64,16 +64,33 @@
 </template>
 
 <script setup lang="js">
-import { ref, onMounted, defineExpose } from 'vue';
+import { reactive, onMounted, defineProps, watch } from 'vue';
 import * as nacl from 'tweetnacl';
 
+
+// 定义 props 和 emits
+const props = defineProps({
+    modelValue: {
+        type: Object,
+        required: true
+    }
+});
+const emit = defineEmits(['update:modelValue']);
+
+// reality vision 数据对象
+const model = reactive({ ...props.modelValue });
+
 onMounted(() => {
-    regenerateVlessRealityData()
+    regenerateVlessRealityData();
+    model.uuid = randomUUID();
+    model.port = randomPort();
 })
+
+
 
 // 生成随机端口
 function randomPort() {
-    return (Math.floor(Math.random() * (65535 - 10000 + 1)) + 10000).toString()
+    return Math.floor(Math.random() * (65535 - 10000 + 1)) + 10000
 }
 // 生成UUID
 function randomUUID() {
@@ -83,26 +100,13 @@ function randomUUID() {
         return v.toString(16)
     })
 }
-// reality vision 数据对象
-const model = ref({
-    port: randomPort().toString(),
-    uuid: randomUUID(),
-    short_id: [],
-    sni: 'www.itunes.com',
-    dest: 'itunes.com:443',
-    private_key: '',
-    public_key: '',
-    remark: 'vless-reality-in',
-    fp: 'chrome',
-});
 
 
 const regenerateVlessRealityData = () => {
     const kp = generateEd25519KeyPair();
-    model.value.private_key = kp.privateKey;
-    model.value.public_key = kp.publicKey;
-    model.value.short_id = kp.shortIds;
-    // Message.success('VLESS Reality 密钥对和 ShortIDs 已重新生成');
+    model.private_key = kp.privateKey;
+    model.public_key = kp.publicKey;
+    model.short_id = kp.shortIds;
 };
 
 
@@ -146,11 +150,15 @@ const toBase64Url = (buf) => {
         .replace(/=+$/, '');
 };
 
-const getFormData = () => {
-    return model.value;
-}
 
-defineExpose({
-    getFormData
-})
+// ✅ 3. 监听 model 的变化，emit 给父组件（深度监听）
+watch(model, (newVal) => {
+    emit('update:modelValue', { ...newVal })
+}, { deep: true })
+
+// ✅ 4. 监听 modelValue 变化（如 tab 切换时），更新本地 model
+watch(() => props.modelValue, (newVal) => {
+    Object.assign(model, newVal)
+}, { deep: true })
+
 </script>
