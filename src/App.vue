@@ -122,9 +122,10 @@ onMounted(() => {
       <router-view />
     </a-layout-content>
     <a-layout-footer
-      class="flex justify-center items-center p-8 bg-[var(--color-bg-2)] text-[var(--color-text-3)]"
+      class="flex justify-center items-center flex-col gap-1 p-8 bg-[var(--color-bg-2)] text-[var(--color-text-3)]"
     >
-      Power by nuox.de
+      <p>Power by nuox.de © 2025</p>
+      <p>当前支持版本 <a-tag>sing-box v1.11.x</a-tag></p>
     </a-layout-footer>
   </a-layout>
 </template>

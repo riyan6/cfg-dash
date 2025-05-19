@@ -107,17 +107,30 @@
           </a-typography-text code>
           <a-typography-title :heading="5">编辑配置</a-typography-title>
           <a-typography-text code>
-            nano /usr/local/etc/sing-box/config.json
+            sudo nano /usr/local/etc/sing-box/config.json
           </a-typography-text code>
-          <a-typography-title :heading="5">运行</a-typography-title>
+          <a-typography-title :heading="5">启用服务（设置开机自启）</a-typography-title>
           <a-typography-text code>
-            sing-box run -c /usr/local/etc/sing-box/config.json
+            sudo systemctl enable sing-box
           </a-typography-text code>
-          <a-typography-title :heading="5">后台运行</a-typography-title>
+          <a-typography-title :heading="5">启用服务</a-typography-title>
           <a-typography-text code>
-            nohup sing-box run -c /usr/local/etc/sing-box/config.json &
+            sudo systemctl start sing-box
+          </a-typography-text code>
+          <a-typography-title :heading="5">查看运行状态</a-typography-title>
+          <a-typography-text code>
+            sudo systemctl status sing-box
+          </a-typography-text code>
+          <a-typography-title :heading="5">停止服务</a-typography-title>
+          <a-typography-text code>
+            sudo systemctl stop sing-box
+          </a-typography-text code>
+          <a-typography-title :heading="5">重启服务</a-typography-title>
+          <a-typography-text code>
+            sudo systemctl restart sing-box
           </a-typography-text code>
         </a-tab-pane>
+        
         <a-tab-pane key="2" title="xray">
           <a-typography-title :heading="5">安装 xray</a-typography-title>
           <a-typography-text code>
